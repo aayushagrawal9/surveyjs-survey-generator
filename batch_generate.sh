@@ -244,8 +244,8 @@ seconds=$((elapsed % 60))
 
 # Count results from temporary file
 if [[ -f /tmp/batch_results.$$ ]]; then
-    successful=$(grep -c "^SUCCESS:" /tmp/batch_results.$$ 2>/dev/null || echo 0)
-    failed=$(grep -c "^FAILED:" /tmp/batch_results.$$ 2>/dev/null || echo 0)
+    successful=$(grep -c "^SUCCESS:" /tmp/batch_results.$$ 2>/dev/null || echo "0")
+    failed=$(grep -c "^FAILED:" /tmp/batch_results.$$ 2>/dev/null || echo "0")
     rm -f /tmp/batch_results.$$
 else
     successful=0
