@@ -33,7 +33,7 @@ client = genai.Client(api_key=os.environ.get("GEMINI_API_KEY"))
 app = typer.Typer(help="Your CLI application")
 
 @memory.cache(cache_validation_callback=expires_after(hours=48))  # 48 hours TTL
-def upload_file_to_gemini(file: Path, mime_type: str):  # TODO: gemini files expire after 48 hours
+def upload_file_to_gemini(file: Path, mime_type: str):
     logger.debug(f"Uploading file to Gemini: {file.name}, {mime_type}")
     return client.files.upload(file=file, config=types.UploadFileConfig(mime_type=mime_type))
 
@@ -70,7 +70,9 @@ def call_gemini(system_instruction: str, model: str = "gemini-2.5-flash-preview-
     if usage:
         logger.info(f"✓ {call_name} completed:")
         logger.info(f"  • Prompt tokens:      {getattr(usage, 'prompt_token_count', 0):,}")
-        logger.info(f"  • Candidates tokens:  {getattr(usage, 'candidates_token_count', 0):,}")
+        candidates_tokens = getattr(usage, 'candidates_token_count', None)
+        candidates_tokens = candidates_tokens if candidates_tokens is not None else 0
+        logger.info(f"  • Candidates tokens:  {candidates_tokens:,}")
         logger.info(f"  • Total tokens:       {getattr(usage, 'total_token_count', 0):,}")
         cached_tokens = getattr(usage, 'cached_content_token_count', None)
         if cached_tokens is not None and cached_tokens > 0:

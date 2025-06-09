@@ -6,31 +6,56 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ### Running the application
 ```bash
-# Basic usage
-python main.py generate-json <input_file> [--mime-type <type>] [--model <model>] [--output <dir>] [--all-examples]
+# Basic usage (single file)
+python main.py <input_file> [--mime-type <type>] [--model <model>] [--output <dir>] [--all-examples]
 
 # With default pages
-python main.py generate-json <input_file> --default-pages "introduction,consent,instructions"
+python main.py <input_file> --default-pages "introduction,consent,instructions"
 
 # Skip default pages (default behavior)
-python main.py generate-json <input_file> --default-pages "none"
+python main.py <input_file> --default-pages "none"
 # or simply omit the flag (defaults to "none")
-python main.py generate-json <input_file>
+python main.py <input_file>
 
 # Use custom default pages directory
-python main.py generate-json <input_file> --default-pages "introduction,consent" --default-pages-dir "custom_pages"
+python main.py <input_file> --default-pages "introduction,consent" --default-pages-dir "custom_pages"
+
+# Disable statistics logging
+python main.py <input_file> --no-log-statistics
+```
+
+### Batch processing
+```bash
+# Process all files in inputs/ directory in parallel (10 concurrent jobs)
+./batch_generate.sh
+
+# Configure batch processing by editing batch_generate.sh:
+# - INPUT_DIR: source directory (default: "inputs")
+# - OUTPUT_DIR: destination directory (default: "output") 
+# - MAX_PARALLEL_JOBS: concurrent processes (default: 10)
+# - DEFAULT_PAGES: pages to include (default: "introduction,consent")
+# - MODEL: AI model to use
+# - ALL_EXAMPLES: bypass example selection UI
 ```
 
 ### Dependencies management
 ```bash
-# Install dependencies (requires Python >=3.13)
-pip install -e .
+# Option 1: Using pip with virtual environment
+source .venv/bin/activate  # On Windows: .venv\Scripts\activate
+
+# Option 2: Using uv (recommended)
+uv run python main.py <input_file>
+
+# Requires Python >=3.13
 ```
 
 ### Environment setup
 ```bash
 # Required environment variable
 export GEMINI_API_KEY="your_api_key_here"
+
+# Virtual environment activation (if using pip)
+source .venv/bin/activate
 ```
 
 ## Architecture
@@ -50,6 +75,16 @@ This is a CLI tool that converts PDF questionnaires and forms into interactive S
 - `call_gemini()`: Cached Gemini API wrapper with usage tracking
 - `upload_file_to_gemini()`: File upload handler with 48-hour cache
 - `create_examples_cache()`: Context caching for example surveys (60-min TTL)
+- `load_default_pages()`: Loads and validates default page templates
+- `format_default_pages_for_prompt()`: Formats default pages for AI prompt injection
+- `validate_page_structure()`: Validates SurveyJS page JSON structure
+- `log_statistics_summary()`: Comprehensive token usage and generation statistics
+- `generate_survey_html()`: Creates self-contained HTML files with embedded surveys
+
+**batch_generate.sh**: Parallel processing script for bulk conversions
+- Processes multiple files concurrently (configurable job limit)
+- Organized error reporting and progress tracking
+- Configurable parameters via script variables
 
 **Caching Strategy**: Uses joblib Memory for aggressive caching:
 - File uploads: 48-hour TTL (matches Gemini file expiration)
@@ -72,7 +107,18 @@ This is a CLI tool that converts PDF questionnaires and forms into interactive S
 - Examples are dynamically injected into prompts for pattern learning
 
 ### Token Management
-Comprehensive token usage tracking and logging with support for cached content tokens to optimize costs when using context caching.
+Comprehensive token usage tracking and logging with support for cached content tokens to optimize costs when using context caching. The `log_statistics_summary()` function provides detailed breakdowns of:
+- Input/output token counts per API call
+- Cached content token usage
+- Total processing costs
+- Generation time and file counts
+
+### Parallel Processing
+The `batch_generate.sh` script enables efficient bulk processing:
+- **Job Control**: Configurable parallel job limits with proper background job management
+- **Error Handling**: Individual file error reporting with detailed error messages
+- **Progress Tracking**: Real-time status updates and completion statistics
+- **Performance**: ~10x speed improvement over sequential processing
 
 ## Development Notes
 
@@ -81,3 +127,5 @@ Comprehensive token usage tracking and logging with support for cached content t
 - MIME type detection is automatic but can be overridden
 - Interactive example selection UI unless `--all-examples` flag is used
 - The application requires Gemini API access and handles file uploads, context caching, and token optimization
+- Default pages are validated for proper SurveyJS structure before injection
+- Output files are organized by type for better management and deployment

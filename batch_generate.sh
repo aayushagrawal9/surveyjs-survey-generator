@@ -15,13 +15,13 @@
 # =============================================================================
 
 # Input directory containing files to process
-INPUT_DIR="inputs"
+INPUT_DIR="input"
 
 # Output directory for generated surveys
 OUTPUT_DIR="output"
 
 # Model to use for generation
-MODEL="gemini-2.5-flash-preview-05-20"
+MODEL="gemini-2.5-pro-preview-05-06"
 
 # Default pages to include (comma-separated list or "none" to skip)
 # Options: introduction, consent, instructions, or "none"
@@ -37,7 +37,7 @@ ALL_EXAMPLES=true
 LOG_STATISTICS=true
 
 # Debug mode - shows full command being executed (true/false)
-DEBUG_MODE=false
+DEBUG_MODE=true
 
 # Maximum number of parallel jobs (adjust based on your system)
 MAX_PARALLEL_JOBS=10
@@ -227,7 +227,7 @@ for file in "${files_to_process[@]}"; do
     
     # Limit number of parallel jobs
     if (( $(jobs -r | wc -l) >= MAX_PARALLEL_JOBS )); then
-        wait -n  # Wait for any job to complete
+        wait  # Wait for any job to complete
     fi
     
     ((file_counter++))

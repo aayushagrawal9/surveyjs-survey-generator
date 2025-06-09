@@ -11,7 +11,7 @@ __pycache__
 *.pyzwz
 cache.db
 uv.lock
-logs
+logs/*
 input/*
 output/*
 examples/*
