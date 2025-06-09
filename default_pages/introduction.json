@@ -1,0 +1,15 @@
+{
+  "name": "page_introduction",
+  "elements": [
+    {
+      "type": "html",
+      "name": "welcome_message",
+      "html": "<h2>Welcome to Our Survey</h2><p>Thank you for taking the time to participate in this survey. Your input is valuable and will help us better understand our participants' perspectives and experiences.</p><p><strong>Estimated completion time:</strong> 5-15 minutes</p><p><strong>Your privacy:</strong> All responses are anonymous and confidential.</p>"
+    },
+    {
+      "type": "html", 
+      "name": "survey_purpose",
+      "html": "<h3>Survey Purpose</h3><p>This survey is designed to collect feedback and insights that will help improve our services and understanding of user needs. Please answer all questions honestly and to the best of your ability.</p>"
+    }
+  ]
+}

@@ -1,0 +1,19 @@
+{
+  "name": "page_consent",
+  "elements": [
+    {
+      "type": "html",
+      "name": "consent_information",
+      "html": "<h3>Participation Consent</h3><p>Before proceeding, please review the following information about your participation in this survey:</p><div style='background-color: #f5f5f5; padding: 15px; margin: 15px 0; border-left: 4px solid #007acc;'><h4>Your Rights as a Participant:</h4><ul><li>Participation is completely voluntary</li><li>You may skip any question you prefer not to answer</li><li>You may exit the survey at any time without penalty</li><li>Your responses will remain anonymous and confidential</li></ul></div><p><strong>Data Use:</strong> The information collected will be used for research and analysis purposes only. No personally identifiable information will be shared.</p>"
+    },
+    {
+      "type": "boolean",
+      "name": "participation_consent",
+      "title": "I understand the above information and voluntarily agree to participate in this survey",
+      "isRequired": true,
+      "labelTrue": "Yes, I agree to participate",
+      "labelFalse": "No, I do not wish to participate",
+      "requiredErrorText": "Please indicate whether you consent to participate before continuing."
+    }
+  ]
+}

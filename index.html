@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SurveyJS Evaluation</title>
+    <!-- jQuery -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <!-- SurveyJS Dependencies -->
+    <script src="https://unpkg.com/survey-jquery/survey.jquery.min.js"></script>
+    <link href="https://unpkg.com/survey-core/survey.core.min.css" type="text/css" rel="stylesheet">
+    <!-- Bootstrap for styling (optional, but makes it look nicer) -->
+    <link href="https://unpkg.com/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        #surveyContainer {
+            margin: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div id="surveyContainer">
+    </div>
+    <script>
+        // Embedded survey JSON data
+        const SURVEY_JSON = {{survey_json}};
+        
+        // Modified JavaScript code to use embedded data
+        async function initSurvey() {{
+            try {{
+                const surveyJSON = SURVEY_JSON;
+
+                Survey.StylesManager.applyTheme("bootstrap");
+
+                const survey = new Survey.Model(surveyJSON);
+                survey.onComplete.add(function (sender) {{
+                    console.log("Survey results: ", sender.data);
+                    const resultsContainer = document.createElement('div');
+                    resultsContainer.innerHTML = `<h2>Survey Results:</h2><pre>${JSON.stringify(sender.data, null, 2)}</pre>`;
+                    document.getElementById('surveyContainer').appendChild(resultsContainer);
+                    document.getElementById('surveyContainer').innerHTML = ''; 
+                    document.getElementById('surveyContainer').appendChild(resultsContainer);
+                }});
+
+                if (typeof $ === 'function' && $('#surveyContainer').Survey) {{
+                     $('#surveyContainer').Survey({
+                        model: survey
+                    });
+                }} else {{
+                    console.error('SurveyJS jQuery plugin not found or jQuery not loaded. Survey cannot be rendered.');
+                    document.getElementById('surveyContainer').innerText = 'Error: Could not load the survey. Check console for details.';
+                }}
+
+            }} catch (error) {{
+                console.error('Failed to load or render survey:', error);
+                document.getElementById('surveyContainer').innerText = 'Error: Could not load or render the survey. Check console for details.';
+            }}
+        }}
+
+        document.addEventListener('DOMContentLoaded', initSurvey);
+    </script>
+</body>
+</html>

@@ -1,0 +1,76 @@
+You are tasked with analyzing a given file to identify and extract structured parts that resemble surveys or questionnaires. Your goal is to output all survey questions and their corresponding options in a standardized XML format.
+
+Please follow these steps
+
+
+1. Carefully read through the entire text.
+
+2. Identify parts that appear to be structured like surveys or questionnaires. Look for:
+
+   - Numbered or lettered questions
+
+   - Multiple choice options
+
+   - Rating scales
+
+   - Yes/No questions
+
+3. For each identified survey question:
+
+   - Extract the question text
+
+   - Identify all associated answer options
+
+4. Format each question and its options in XML, using the following structure:
+
+   <question id="(Optional)">
+
+     <text>[Question text here]</text>
+
+     <options>
+
+       <option>[Option 1]</option>
+
+       <option>[Option 2]</option>
+
+       ...
+
+     </options>
+
+   </question>
+
+
+
+Here's an example of how a formatted question should look:
+
+
+
+<question id="GP3">
+
+  <text>Because of my physical condition, I have trouble meeting the needs of my family</text>
+
+  <options>
+
+    <option>Not at all</option>
+
+    <option>A little bit</option>
+
+    <option>Somewhat</option>
+
+    <option>Quite a bit</option>
+
+    <option>Very much</option>
+
+  </options>
+
+</question>
+
+
+
+The information will be passed to a survey generator that will only feature one question per page but may be divided into sections. Pay explicit attention that each <section> should contain all the information needed to answer all questions within that section. If you encounter something where not all options are defined FOR EXAMPLE a linear scale of 1 to 5 with 1 representing bad and 5 good, explicitly provide a legend that explains the values followed by <option>s that contain the actual selectable values (1,2,3,4,5 in this example)
+
+Wrap the entire set of questions into <survey> </survey> tags
+
+Make sure to include ALL identified survey questions and their options, even if they appear in different parts of the text.
+
+Your final output should be a series of <question> elements, each containing a <text> element and an <options> element with nested <option> elements, all wrapped in a root <survey> tag. Do not include any other text or explanations in your output.

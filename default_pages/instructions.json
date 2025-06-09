@@ -1,0 +1,20 @@
+{
+  "name": "page_instructions",
+  "elements": [
+    {
+      "type": "html",
+      "name": "general_instructions",
+      "html": "<h3>Survey Instructions</h3><p>Please read these instructions carefully before beginning:</p>"
+    },
+    {
+      "type": "html",
+      "name": "response_guidelines",
+      "html": "<div style='background-color: #e8f4fd; padding: 20px; margin: 15px 0; border-radius: 5px;'><h4>How to Respond:</h4><ol><li><strong>Read each question carefully</strong> - Take your time to understand what is being asked</li><li><strong>Answer honestly</strong> - There are no right or wrong answers, we want your genuine opinion</li><li><strong>Complete all required questions</strong> - Questions marked with an asterisk (*) must be answered</li><li><strong>Use the navigation buttons</strong> - Click 'Next' to proceed or 'Previous' to go back</li></ol></div>"
+    },
+    {
+      "type": "html",
+      "name": "technical_notes",
+      "html": "<h4>Technical Notes:</h4><ul><li>Your progress is automatically saved as you complete each page</li><li>You can return to previous pages to review or change your answers</li><li>If you experience technical difficulties, please refresh the page</li><li>The survey works best on desktop computers and tablets</li></ul><p><strong>Ready to begin?</strong> Click 'Next' to start the survey.</p>"
+    }
+  ]
+}
