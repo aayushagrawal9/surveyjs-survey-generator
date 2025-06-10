@@ -12,8 +12,9 @@ __pycache__
 cache.db
 uv.lock
 logs/*
-input/*
-output/*
+input
+output
+logs
 examples/*
 cache
 /.envrc
