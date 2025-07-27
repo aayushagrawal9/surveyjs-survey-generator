@@ -49,6 +49,18 @@ uv run python main.py <input_file>
 # Requires Python >=3.13
 ```
 
+### Installing uv
+```bash
+# macOS and Linux
+curl -LsSf https://astral.sh/uv/install.sh | sh
+
+# Windows
+powershell -c "irm https://astral.sh/uv/install.ps1 | iex"
+
+# Via pip
+pip install uv
+```
+
 ### Environment setup
 ```bash
 # Required environment variable
